@@ -14,6 +14,7 @@ import androidx.annotation.RequiresPermission
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
@@ -30,6 +31,7 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.asImageBitmap
@@ -47,7 +49,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             InkTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    App(Modifier.padding(innerPadding))
+                    App(innerPadding)
                 }
             }
         }
@@ -56,7 +58,8 @@ class MainActivity : ComponentActivity() {
 
 
 @Composable
-fun App(modifier: Modifier) {
+fun App(innerPadding: PaddingValues) {
+    val homeScreenApps = remember { mutableStateListOf<AppInfo>() }
     val context = LocalContext.current
     val wallpaperManager = WallpaperManager.getInstance(context)
     val drawable = wallpaperManager.drawable
@@ -72,7 +75,7 @@ fun App(modifier: Modifier) {
        // OutlinedTextField(onValueChange = {})
        // LauncherScreen(context)
 
-       HomeScreen()
+       HomeScreen(innerPadding, homeScreenApps)
    }
 }
 
